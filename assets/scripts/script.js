@@ -1,29 +1,36 @@
-
+var clickCounter = 0;
+var theContainer = $('.masonry');  
 var input = document.getElementById("search");
-input.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
+
+input.addEventListener("keyup", function(test) {
+
+  if (test.keyCode === 13 ) { 
    SearchPhotos();
   }
+
+  
 });
+
 function SearchPhotos(){
     let clientId = "trMv8p2Gmpi4jpFjQV0uvT0uj8ZbMMXyTaIQVKFHZDY"
     let query = document.getElementById("search").value;
 
     let url = "https://api.unsplash.com/search/photos/?client_id="+clientId+"&query="+query;
-
+    
     fetch(url)
     .then(function(data){
+
         return data.json();
     }
     )
     .then(function(data){
-            // console.log(data);
-          
+
             $.each(data.results, function(index,value) {
-              console.log(value.results);
+              
               var value = value;
+              // console.log(value);
           
-            var theContainer = $('.masonry');  
+            
           
             var author = value.user.username;
             var description = value.user.bio;
@@ -66,7 +73,13 @@ function SearchPhotos(){
           
           
           });
+          clickCounter += 1;
+          console.log(clickCounter);
+          if(clickCounter>=1){
+            theContainer.empty();
+          }
     }
+    // theContainer.empty();
 
   
 
